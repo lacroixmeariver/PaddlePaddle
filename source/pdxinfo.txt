@@ -1,0 +1,7 @@
+
+name=Paddle Paddle
+author=Ingrid
+description=Pong but not pong
+bundleID=com.Ingrid.notpong
+version=1.0
+buildNumber=1
