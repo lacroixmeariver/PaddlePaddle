@@ -21,8 +21,21 @@ WALL_TAGS = {
     paddle = 111
 
 }
+
+
+GAME_STATE_TAGS = {
+    TITLE = 1000,
+    START = 2000,
+    RUNNING = 2200,
+    PAUSE = 2500,
+    END = 0000,
+    SETTINGS = 1111
+}
+
+GAME_STATE = GAME_STATE_TAGS.TITLE
+
 SCENEMANAGER = SceneManager()
---SCENEMANAGER:initGame()
+SCENEMANAGER:menuScreen()
 
 
 
@@ -31,4 +44,5 @@ function playdate.update()
     gfx.sprite.update()
     SCENEMANAGER:update()
 
+    
 end 

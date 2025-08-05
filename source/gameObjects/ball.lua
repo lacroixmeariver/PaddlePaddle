@@ -20,20 +20,20 @@ function Ball:collisionResponse(other)
     self.interaction = other
     local tag = other:getTag()
     if tag == WALL_TAGS.lowerBound or tag == WALL_TAGS.topBound then 
-        print("top or bottom touched")
+        --print("top or bottom touched")
     end 
     if tag == WALL_TAGS.leftWall then 
         rightPaddle += 1
-        print(rightPaddle)
-        print("left wall touched")
+        --print(rightPaddle)
+        --print("left wall touched")
     end 
     if tag == WALL_TAGS.rightWall then 
         leftPaddle += 1
-        print(leftPaddle)
-        print("right wall touched")
+        --print(leftPaddle)
+        --print("right wall touched")
     end 
     if tag == WALL_TAGS.paddle then 
-        print("paddle hit")
+        --print("paddle hit")
     end 
     
     return "bounce"
