@@ -14,6 +14,11 @@ class("SceneManager").extends()
 --startGame = false
 
 
+local menuItems = {"Start Game", "Settings", "Exit"}
+local selectedOption = 1
+local arrowImage = gfx.image.new("assets/arrow")
+local arrowSprite = gfx.sprite.new(arrowImage)
+arrowSprite:setImage(arrowImage)
 
 function SceneManager:initGame()
 --self.endGame = false
@@ -36,12 +41,14 @@ EnemyPaddle(392, 120, gameBall)
 
 end
 
+
+
 function SceneManager:startScreen()
     --gfx.clear()
     --gfx.sprite.removeAll()
     gfx.drawTextAligned("Press Ⓐ to start!", screenWidth / 2, screenHeight / 2 - 27, kTextAlignment.center)
     gfx.drawTextAligned("First player to reach 10 wins!", screenWidth / 2, screenHeight / 2 - 2, kTextAlignment.center)
-    if pd.buttonJustPressed(pd.kButtonA) then 
+    if pd.buttonIsPressed(pd.kButtonA) then 
         --startGame = true
         gfx.clear()
         gfx.sprite.removeAll()
@@ -79,20 +86,57 @@ function SceneManager:isGameOver()
 end
 
 function SceneManager:menuScreen()
-    gfx.drawTextAligned("Menu screen", screenWidth / 2, screenHeight / 2 - 27, kTextAlignment.center)
-    gfx.drawTextAligned("Press Ⓐ to start", screenWidth / 2, screenHeight / 2 - 5, kTextAlignment.center)
-    if pd.buttonJustPressed(pd.kButtonA) then 
-        gfx.sprite.removeAll()
-        gfx.clear()
-        GAME_STATE = GAME_STATE_TAGS.START
-        --self:startScreen()
+    -- gfx.drawTextAligned("Menu screen", screenWidth / 2, screenHeight / 2 - 27, kTextAlignment.center)
+    -- gfx.drawTextAligned("Press Ⓐ to start", screenWidth / 2, screenHeight / 2 - 5, kTextAlignment.center)
+    
+    
+    for i, item in ipairs(menuItems) do 
+        local y = 80 + (i-1) * 20
+        gfx.drawText(item, 100, y) -- menu options 
+        if i == selectedOption then 
+            arrowSprite:moveTo(85, y + 7)
+        end 
+        arrowSprite:add()
+    end 
 
-    end
+
+    -- if pd.buttonJustPressed(pd.kButtonA) then 
+    --     gfx.sprite.removeAll()
+    --     gfx.clear()
+    --     GAME_STATE = GAME_STATE_TAGS.START
+    --     --self:startScreen()
+
+    -- end
+    --gfx.clear()
+end
+
+function playdate.upButtonDown()
+    selectedOption -= 1
+    if selectedOption < 1 then selectedOption = #menuItems
+    end 
+    
+end
+
+function playdate.downButtonDown()
+    selectedOption += 1
+    if selectedOption > #menuItems then selectedOption = 1 end 
+    
 end
 
 
+function pd:AButtonDown()
+    --local menu = self:menuScreen()
+    if GAME_STATE == GAME_STATE_TAGS.TITLE then 
+        local selection = menuItems[selectedOption]
+        if selection == "Start Game" then 
+            GAME_STATE = GAME_STATE_TAGS.START
+            return 
+        end
+    end 
+end
 
 function SceneManager:update()  
+    
     if GAME_STATE == GAME_STATE_TAGS.TITLE then 
         self:menuScreen()
         return
@@ -109,5 +153,6 @@ function SceneManager:update()
         gfx.drawTextAligned(leftPaddle .. " : " .. rightPaddle, screenWidth / 2, 5, kTextAlignment.center)
     end
     self:isGameOver()
+    arrowSprite:remove()
 end 
 

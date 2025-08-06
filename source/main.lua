@@ -22,7 +22,6 @@ WALL_TAGS = {
 
 }
 
-
 GAME_STATE_TAGS = {
     TITLE = 1000,
     START = 2000,
@@ -32,7 +31,7 @@ GAME_STATE_TAGS = {
     SETTINGS = 1111
 }
 
-GAME_STATE = GAME_STATE_TAGS.TITLE
+GAME_STATE = GAME_STATE_TAGS.TITLE -- setting the initial game state as the title screen 
 
 SCENEMANAGER = SceneManager()
 SCENEMANAGER:menuScreen()
@@ -40,9 +39,10 @@ SCENEMANAGER:menuScreen()
 
 
 function playdate.update()
-
+    
     gfx.sprite.update()
     SCENEMANAGER:update()
 
+    
     
 end 
